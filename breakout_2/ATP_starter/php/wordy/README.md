@@ -88,5 +88,3 @@ Run the unit tests with the command:
 ```
 phpunit tests/FizzBuzzTest.php
 ```
-
-Github commit/push check
