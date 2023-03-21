@@ -9,13 +9,13 @@ public class WordyTests
         Assert.Equal(5, Wordy.Answer("What is 5?"));
     }
 
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact]
     public void Addition()
     {
         Assert.Equal(2, Wordy.Answer("What is 1 plus 1?"));
     }
 
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact()]
     public void More_addition()
     {
         Assert.Equal(55, Wordy.Answer("What is 53 plus 2?"));
