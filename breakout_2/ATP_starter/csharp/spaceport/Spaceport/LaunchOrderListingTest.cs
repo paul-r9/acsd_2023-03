@@ -33,10 +33,11 @@ namespace SpacePort
         public void LaunchesAreSortedByDestination_DestinationsAreUnique()
         {
             ISpacelineLaunchInfoProvider mock = new ProviderWithMultipleUniqueLaunches();
-            
+
             var sut = new SpaceportDepartureBoard(mock);
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.AreEqual("A", sut.LaunchList[0].Destination);
                 Assert.AreEqual("B", sut.LaunchList[1].Destination);
             });
@@ -49,12 +50,13 @@ namespace SpacePort
         {
             return new List<LaunchInfo>
             {
-                new  LaunchInfo(System.Guid.NewGuid()){
-                     Destination="B"
+                new LaunchInfo(System.Guid.NewGuid())
+                {
+                    Destination = "B"
                 },
                 new LaunchInfo(System.Guid.NewGuid())
                 {
-                    Destination ="A"
+                    Destination = "A"
                 }
             };
         }
