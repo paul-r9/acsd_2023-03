@@ -19,7 +19,11 @@ namespace GildedRose
         {
             for (var i = 0; i < _items.Count; i++)
             {
-                if (!_items[i].Name.Equals("Aged Brie") && !_items[i].Name.Equals(BackstagePasses)) {
+                if(_items[i].Name.Equals("Conjured item"))
+                {
+                    _items[i].Quality -= 2;
+                }
+                else if (!_items[i].Name.Equals("Aged Brie") && !_items[i].Name.Equals(BackstagePasses)) {
                     if (_items[i].Quality > MinimumQuantity)
                     {
                         if (!_items[i].Name.Equals("Sulfuras, Hand of Ragnaros"))
