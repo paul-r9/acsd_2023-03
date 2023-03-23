@@ -7,6 +7,7 @@ namespace GildedRose
     public class GildedRoseTest
     {
         private const string BackstagePass = "Backstage passes to a TAFKAL80ETC concert";
+        private const string ConjuredItem = "Conjured item";
 
         private List<Item> createItemList(string itemName, int sellIn, int quality) {
             return new List<Item> { new Item { Name = itemName, SellIn = sellIn, Quality = quality } };
@@ -34,6 +35,7 @@ namespace GildedRose
         [TestCase("generic item")]
         [TestCase("Aged Brie")]
         [TestCase(BackstagePass)]
+        [TestCase(ConjuredItem)]
         public void NonLegendaryItem_SellInDate_Decreases(string name) {
             GildedRose sut = new GildedRose(createItemList(name, 8, 10));
             sut.UpdateQuality();
@@ -43,6 +45,7 @@ namespace GildedRose
         [TestCase("generic item")]
         [TestCase("Aged Brie")]
         [TestCase(BackstagePass)]
+        [TestCase(ConjuredItem)]
         public void NonLegendaryItem_SellInDate_CanBeNegative(string name) {
             GildedRose sut = new GildedRose(createItemList(name, 0, 25));
             sut.UpdateQuality();
@@ -142,9 +145,20 @@ namespace GildedRose
                 Assert.AreEqual(9, items[1].SellIn, "generic item SellIn is decreased");
             });
         }
-        
+
         //NEW BEHAVIOR
         // conjured items
-    
+        [Test]
+        public void ConjuredItem_QualityDegradesTwiceAsFast()
+        {
+            // Arrange
+            GildedRose sut = new GildedRose(createItemList(ConjuredItem, 5, 50));
+
+            // Act
+            sut.UpdateQuality();
+
+            Assert.AreEqual(48, sut.Items[0].Quality);
+        }
+
     }
 }

@@ -14,7 +14,7 @@ namespace SpacePort
         }
 
         private void SortLaunches() {
-            throw new NotImplementedException("sorting logic hasn't been implemented yet");
+        
         }
 
         internal void RemoveInactiveLaunches()

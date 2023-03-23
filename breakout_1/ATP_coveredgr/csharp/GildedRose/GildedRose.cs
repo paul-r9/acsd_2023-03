@@ -19,78 +19,78 @@ namespace GildedRose
         {
             for (var i = 0; i < _items.Count; i++)
             {
-                var item = _items[i];
-                if (!item.Name.Equals("Aged Brie") && !item.Name.Equals(BackstagePasses))
+                if(_items[i].Name.Equals("Conjured item"))
                 {
-                    IncreaseQuality(item);
+                    _items[i].Quality -= 2;
+                }
+                else if (!_items[i].Name.Equals("Aged Brie") && !_items[i].Name.Equals(BackstagePasses)) {
+                    if (_items[i].Quality > MinimumQuantity)
+                    {
+                        if (!_items[i].Name.Equals("Sulfuras, Hand of Ragnaros"))
+                        {
+                            _items[i].Quality = _items[i].Quality - 1;
+                        }
+                    }
                 }
                 else
                 {
-                    if (item.Quality < MaximumQuality)
+                    if (_items[i].Quality < MaximumQuality)
                     {
-                        item.Quality += 1;
+                        _items[i].Quality = _items[i].Quality + 1;
 
-                        if (item.Name.Equals(BackstagePasses))
+                        if (_items[i].Name.Equals(BackstagePasses))
                         {
-                            if (item.SellIn < 11)
+                            if (_items[i].SellIn < 11)
                             {
-                                if (item.Quality < MaximumQuality)
+                                if (_items[i].Quality < MaximumQuality)
                                 {
-                                    item.Quality += 1;
+                                    _items[i].Quality = _items[i].Quality + 1;
                                 }
                             }
 
-                            if (item.SellIn < 6)
+                            if (_items[i].SellIn < 6)
                             {
-                                if (item.Quality < MaximumQuality)
+                                if (_items[i].Quality < MaximumQuality)
                                 {
-                                    item.Quality += 1;
+                                    _items[i].Quality = _items[i].Quality + 1;
                                 }
                             }
                         }
                     }
                 }
 
-                if (!item.Name.Equals("Sulfuras, Hand of Ragnaros"))
+                if (!_items[i].Name.Equals("Sulfuras, Hand of Ragnaros"))
                 {
-                    item.SellIn -= 1;
+                    _items[i].SellIn = _items[i].SellIn - 1;
                 }
 
-                if (item.SellIn < 0)
+                if (_items[i].SellIn < 0)
                 {
-                    if (!item.Name.Equals("Aged Brie"))
+                    if (!_items[i].Name.Equals("Aged Brie"))
                     {
-                        if (!item.Name.Equals(BackstagePasses))
+                        if (!_items[i].Name.Equals(BackstagePasses))
                         {
-                            if (item.Quality > MinimumQuantity)
+                            if (_items[i].Quality > MinimumQuantity)
                             {
-                                if (!item.Name.Equals("Sulfuras, Hand of Ragnaros"))
+                                if (!_items[i].Name.Equals("Sulfuras, Hand of Ragnaros"))
                                 {
-                                    item.Quality -= 1;
+                                    _items[i].Quality = _items[i].Quality - 1;
                                 }
                             }
                         }
                         else
                         {
-                            item.Quality = 0;
+                            _items[i].Quality = _items[i].Quality - _items[i].Quality;
                         }
                     }
                     else
                     {
-                        if (item.Quality < MaximumQuality)
+                        if (_items[i].Quality < MaximumQuality)
                         {
-                            item.Quality += 1;
+                            _items[i].Quality = _items[i].Quality + 1;
                         }
                     }
                 }
-            }
-        }
-
-        private static void IncreaseQuality(Item item)
-        {
-            if (item.Quality > MinimumQuantity && !item.Name.Equals("Sulfuras, Hand of Ragnaros"))
-            {
-                item.Quality -= 1;
             }
         }
     }
