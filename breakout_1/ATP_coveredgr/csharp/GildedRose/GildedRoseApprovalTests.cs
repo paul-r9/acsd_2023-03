@@ -35,11 +35,15 @@ namespace GildedRose {
         public void AllItemCombinations() {
             CombinationApprovals.VerifyAllCombinations(
                 DoUpdateQuality,
-                new string[] {"foo", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"},
+                new string[] {"generic item", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"},
                 new int[] {-1, 0, 5, 10, 11},       // SellIn
                 new int[] { 0, 1, 49, 50 }          // Quality
                 );
         }
+
+        /*
+        */
+
         
         private string DoUpdateQuality(string name, int sellIn, int quality) {
             var items = createItemList(name, sellIn, quality);

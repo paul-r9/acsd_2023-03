@@ -21,7 +21,7 @@ public class GildedRoseTest {
         GildedRose sut = new GildedRose(createItemArray("Sulfuras, Hand of Ragnaros", 20, 80));
 
         // Act
-        sut.updateQuality();
+        sut.somethingElseUpdate();
 
         // Assert
         assertEquals(80, sut.items[0].quality, "Quality is not decreased for this legendary item");
@@ -30,7 +30,7 @@ public class GildedRoseTest {
     @Test
     void LegendaryItem_NeverHasToBeSold() {
         GildedRose sut = new GildedRose(createItemArray("Sulfuras, Hand of Ragnaros", 1, 80));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(1, sut.items[0].sellIn, "SellIn is not decreased for this legendary item");
     }
 
@@ -38,7 +38,7 @@ public class GildedRoseTest {
     void LegendaryItem_NegativeSellIn_QualityUnchanged() {
         // Covers the code path where sellIn is negative, quality is positive, and *is* Legendary
         GildedRose sut = new GildedRose(createItemArray("Sulfuras, Hand of Ragnaros", -1, 80));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(-1, sut.items[0].sellIn, "SellIn is not decreased for this legendary item");
     }
 
@@ -46,7 +46,7 @@ public class GildedRoseTest {
     @CsvSource({"generic item", "Aged Brie", BACKSTAGE_PASS})
     void NonLegendaryItem_SellInDate_Decreases(String itemName) {
         GildedRose sut = new GildedRose(createItemArray(itemName, 8, 10));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(7, sut.items[0].sellIn, "Item sellIn date should decrease by 1 each day");
     }
 
@@ -54,35 +54,35 @@ public class GildedRoseTest {
     @CsvSource({"generic item", "Aged Brie", BACKSTAGE_PASS})
     void NonLegendaryItem_SellInDate_CanBeNegative(String itemName) {
         GildedRose sut = new GildedRose(createItemArray(itemName, 0, 25));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(-1, sut.items[0].sellIn, "SellIn date will go negative once sellIn date is reached");
     }
 
     @Test
     void GenericItem_QualityDecreasesBeforeSellInDate() {
         GildedRose sut = new GildedRose(createItemArray("generic item", 5, 10));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(9, sut.items[0].quality, "Item quality should only decrease by 1 each day");
     }
 
     @Test
     void GenericItem_QualityDecreasesTwiceAsFastAfterSellInDate() {
         GildedRose sut = new GildedRose(createItemArray("generic item", 0, 10));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(8, sut.items[0].quality, "When sellIn date is 0 then quality decreases twice as fast");
     }
 
     @Test
     void GenericItem_QualityNeverGoesNegative() {
         GildedRose sut = new GildedRose(createItemArray("generic item", 0, 0));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(0, sut.items[0].quality, "Quality will not go negative once it is zero");
     }
 
     @Test
     void AgedBrie_QualityIncreases() {
         GildedRose sut = new GildedRose(createItemArray("Aged Brie", 5, 30));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(31, sut.items[0].quality, "Aged Brie increases quality with age");
     }
 
@@ -90,7 +90,7 @@ public class GildedRoseTest {
     @CsvSource({"Aged Brie", BACKSTAGE_PASS})
     void NonLegendaryItem_ThatImprovesWithAge_QualityIsCappedAt50(String itemName) {
         GildedRose sut = new GildedRose(createItemArray(itemName, 5, 50));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(50, sut.items[0].quality, "Quality has an upper limit that is not exceeded");
     }
 
@@ -98,49 +98,49 @@ public class GildedRoseTest {
     @Test
     void AgedBrie_QualityIncreases_EvenAfterSellInDate() {
         GildedRose sut = new GildedRose(createItemArray("Aged Brie", -1, 20));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(22, sut.items[0].quality, "Aged Brie improves twice as fast after sellIn date (BUG?)");
     }
 
     @Test
     void AgedBrie_QualityIsCappedAt50_EvenWhenReallyOld() {
         GildedRose sut = new GildedRose(createItemArray("Aged Brie", -99, 50));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(50, sut.items[0].quality, "Quality has an upper limit, even when cheese is old");
     }
 
     @Test
     void BackstagePass_QualityIncreasesEachDay() {
         GildedRose sut = new GildedRose(createItemArray(BACKSTAGE_PASS, 30, 23));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(24, sut.items[0].quality, "Backstage Pass increases quality with age");
     }
 
     @Test
     void BackstagePass_QualityIncreasesMoreAsConcertNears() {
         GildedRose sut = new GildedRose(createItemArray(BACKSTAGE_PASS, 10, 40));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(42, sut.items[0].quality, "Backstage Pass quality increases more when concert is near");
     }
 
     @Test
     void BackstagePass_QualityIncreasesMuchMoreWhenConcertIsClose() {
         GildedRose sut = new GildedRose(createItemArray(BACKSTAGE_PASS, 5, 40));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(43, sut.items[0].quality, "Backstage Pass quality increases even more when concert is almost here");
     }
 
     @Test
     void BackStagePass_QualityDropsToZeroWhenConcertPasses() {
         GildedRose sut = new GildedRose(createItemArray(BACKSTAGE_PASS, 0, 50));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(0, sut.items[0].quality, "Backstage Pass is worthless when concert has passed");
     }
 
     @Test
     void BackstagePass_QualityIsCappedAtMaximum() {
         GildedRose sut = new GildedRose(createItemArray(BACKSTAGE_PASS, 5, 49));
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         assertEquals(50, sut.items[0].quality, "Backstage pass, very close to sellIn date, is still capped at maximum quality");
     }
 
@@ -150,7 +150,7 @@ public class GildedRoseTest {
                                     new Item("generic item", 10, 5)};
         GildedRose sut = new GildedRose(items);
 
-        sut.updateQuality();
+        sut.somethingElseUpdate();
 
         assertAll("Each item in the shop should be updated correctly",
                 () -> assertEquals(0, items[0].sellIn, "Legendary item sellIn date is not changed"),

@@ -2,8 +2,6 @@ package gildedrose;
 
 import org.approvaltests.Approvals;
 import org.approvaltests.combinations.CombinationApprovals;
-import org.approvaltests.reporters.UseReporter;
-import org.approvaltests.reporters.macosx.DiffMergeReporter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,7 +17,7 @@ public class GildedRoseApprovalTests {
         GildedRose sut = new GildedRose(items);
 
         // Act
-        sut.updateQuality();
+        sut.somethingElseUpdate();
 
         // Assert
         // The Verify call creates a file named GildedRoseApprovalTests.OneItemApproval.received.txt
@@ -42,7 +40,7 @@ public class GildedRoseApprovalTests {
     private String doUpdateQuality(String name, int sellIn, int quality) {
         Item[] items = new Item[]{new Item(name, sellIn, quality)};
         GildedRose sut = new GildedRose(items);
-        sut.updateQuality();
+        sut.somethingElseUpdate();
         return sut.items[0].toString();
     }
 }

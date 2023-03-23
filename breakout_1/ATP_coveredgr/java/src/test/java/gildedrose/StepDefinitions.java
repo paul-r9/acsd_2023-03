@@ -28,7 +28,7 @@ public class StepDefinitions {
 
     @When("I update the quality")
     public void i_update_the_quality() {
-        app.updateQuality();
+        app.somethingElseUpdate();
     }
 
     @Then("I should get item as {string}")
